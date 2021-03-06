@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>     /* memset */
-#include "rt_sched.h"
+#include "rt_scheduler.h"
 
 /* ratio accuracy: exp2(-MAX_EXP); max 32 */
 #define MAX_EXP     8
@@ -27,13 +27,8 @@ static uint32_t factorize_2(unsigned n, unsigned d)
     return f2;
 }
 
-/**
- * Initialize ratios and index tables basing on the priority table.
- * The initialized tables must have at least prios_n - 1 elements.
- *
- * Return number of elements in the initialized tables (always prios_n - 1).
- */
-size_t rts_init_tables(
+/* exported; see header for details */
+size_t rts_proc_tables(
     const unsigned *prios, size_t prios_n, uint32_t *ratios, size_t *inds)
 {
     size_t i;
@@ -79,11 +74,7 @@ static bool check_index(uint32_t ratio, size_t ind)
     return false;
 }
 
-/**
- * Get next priority id: 0(highest), 1, ...
- * Ratio and indexes tables of size ratios_n as returned by rts_init_tables().
- * Indexes table is updated accordingly after the call for the next iteration.
- */
+/* exported; see header for details */
 size_t rts_get_prio_id(const uint32_t *ratios, size_t *inds, size_t ratios_n)
 {
     size_t i, prio_i;
@@ -101,4 +92,3 @@ size_t rts_get_prio_id(const uint32_t *ratios, size_t *inds, size_t ratios_n)
     }
     return prio_i;
 }
-

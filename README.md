@@ -3,6 +3,6 @@
 ## Build
 
 ```
-cmake -B build .
-cmake --build build
+cmake -B BUILD .
+cmake --build BUILD
 ```

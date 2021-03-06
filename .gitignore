@@ -1,4 +1,4 @@
-build/*
+BUILD/*
 *.o
 *.sw[a-p]
 tags

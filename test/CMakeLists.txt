@@ -1,17 +1,17 @@
 add_executable(
-    rt_sched_test
-    rt_sched_test.c
-    $<TARGET_OBJECTS:rt_sched_objs>
+    rt_scheduler_test
+    rt_scheduler_test.c
+    $<TARGET_OBJECTS:rt_scheduler_objs>
 )
 
 target_include_directories(
-    rt_sched_test
+    rt_scheduler_test
     PRIVATE
-    $<TARGET_PROPERTY:rt_sched_objs,INCLUDE_DIRECTORIES>
+    $<TARGET_PROPERTY:rt_scheduler_objs,INCLUDE_DIRECTORIES>
 )
 
 target_compile_options(
-    rt_sched_test
+    rt_scheduler_test
     PRIVATE
     -Wall
 )
