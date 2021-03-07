@@ -10,7 +10,7 @@ int main()
     size_t inds[ARR_SZ(ts) - 1];
     uint32_t ratios[ARR_SZ(ts) - 1];
 
-    size_t ratios_n = rts_proc_tables(ts, ARR_SZ(ts), ratios, inds);
+    size_t ratios_n = rts_init_proc_tables(ts, ARR_SZ(ts), ratios, inds);
 
     for (int i = 0; i < 512; i++)
         printf("%d\n", (int)rts_get_prio_id(ratios, inds, ratios_n));

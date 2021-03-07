@@ -1,22 +1,24 @@
 # Real Time Scheduler
 
-## Time Scheduler
+## Theory
 
-### Defines
+### Definitions
 
-* *t_m*, *m* = 0, 1, ..., N: CPU time spent in task priority *m* measured in
-  time-span *T*, where 0: highest priority, N: lowest priority.
+* *t_m*, *m* = 0, 1, ..., *N*: CPU time spent in task priority *m* measured in
+  time-span *T*, where 0: highest priority, *N*: lowest priority.
 
 * *T_m* defined as:
 
   ![T_m = \sum_{i=m}^N t_i](math/T_m.png)
 
-  is CPU time spent in tasks with priority *m*, *m + 1*, ...
+  is CPU time spent in tasks with priority *m*, *m + 1*, ..., *N*.
   Therefore *T = T_0*
 
-* Time ratio *r_m = t_m/T_m*. Always *r_m < 1*
+* Time ratio:
 
-### CPU Time Scheduling
+  ![r_m = t_m/T_m; 0<r_m<1](math/r_m.png)
+
+### Time Scheduling
 
 For given priority *m*, *r_m* is factorized into 2-base fraction:
 

@@ -12,12 +12,12 @@
  * n/d = a1 * exp2(-1) + a2 * exp2(-2) + ... + aMAX_EXP * exp2(-M),
  * where an is (n - 1)-th bit of result.
  */
-static uint32_t factorize_2(unsigned n, unsigned d)
+static uint32_t fact_2(unsigned n, unsigned d)
 {
     int i;
     uint32_t f2 = 0;
 
-    assert(n < d);
+    assert(n > 0 && n < d);
 
     for (i = 0; i < CONFIG_RTS_M && n; i++) {
         n <<= 1;
@@ -30,7 +30,7 @@ static uint32_t factorize_2(unsigned n, unsigned d)
 }
 
 /* exported; see header for details */
-size_t rts_proc_tables(
+size_t rts_init_proc_tables(
     const unsigned *ts, size_t ts_n, uint32_t *ratios, size_t *inds)
 {
     size_t i;
@@ -43,7 +43,7 @@ size_t rts_proc_tables(
         sum += ts[i];
 
     for (i = 0; i < ts_n - 1; i++) {
-        ratios[i] = factorize_2(ts[i], sum);
+        ratios[i] = fact_2(ts[i], sum);
         sum -= ts[i];
     }
     return ts_n - 1;
@@ -62,8 +62,10 @@ size_t rts_proc_tables(
  * n = 3: index = 3 + 8 * i,
  * n = 4: index = 7 + 16 * i,
  * ...
+ *
+ * The routine returns n or 0 in case index doesn't match the ratio.
  */
-static bool check_index(uint32_t ratio, size_t ind)
+static int check_ind(uint32_t ratio, size_t ind)
 {
     int i;
 
@@ -71,9 +73,9 @@ static bool check_index(uint32_t ratio, size_t ind)
         if (!(ratio & 1))
             continue;
         else if (!((ind - ((1 << i) - 1)) & ((1 << (i + 1)) - 1)))
-            return true;
+            return i + 1;
     }
-    return false;
+    return 0;
 }
 
 /* exported; see header for details */
@@ -82,7 +84,7 @@ size_t rts_get_prio_id(const uint32_t *ratios, size_t *inds, size_t ratios_n)
     size_t i, prio_i;
 
     for (i = 0;; i++) {
-        if (check_index(ratios[i], inds[i])) {
+        if (check_ind(ratios[i], inds[i])) {
             prio_i = i;
             do { inds[i]++; } while (i--);
             break;
