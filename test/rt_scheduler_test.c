@@ -5,7 +5,7 @@
 
 int main()
 {
-    const unsigned ts[] = {256, 128, 64, 32, 16, 8, 4, 2, 1, 1};
+    const uint32_t ts[] = {256, 128, 64, 32, 16, 8, 4, 2, 1, 1};
 
     size_t inds[ARR_SZ(ts) - 1];
     uint32_t ratios[ARR_SZ(ts) - 1];

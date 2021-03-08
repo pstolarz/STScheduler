@@ -12,7 +12,7 @@
  * Return number of elements in the initialized tables (that is: ts_n - 1).
  */
 size_t rts_init_proc_tables(
-    const unsigned *ts, size_t ts_n, uint32_t *ratios, size_t *inds);
+    const uint32_t *ts, size_t ts_n, uint32_t *ratios, size_t *inds);
 
 /**
  * Get next priority id: 0 (highest), 1, 2, ...

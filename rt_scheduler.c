@@ -5,6 +5,8 @@
 /* ratio accuracy: exp2(-M); max 32 */
 #ifndef CONFIG_RTS_M
 # define CONFIG_RTS_M   8
+#elif CONFIG_RTS_M < 1 || CONFIG_RTS_M > 32
+# error "Invalid CONFIG_RTS_M"
 #endif
 
 /**
@@ -12,7 +14,7 @@
  * n/d = a1 * exp2(-1) + a2 * exp2(-2) + ... + aMAX_EXP * exp2(-M),
  * where an is (n - 1)-th bit of result.
  */
-static uint32_t fact_2(unsigned n, unsigned d)
+static uint32_t fact_2(uint32_t n, uint32_t d)
 {
     int i;
     uint32_t f2 = 0;
@@ -31,10 +33,10 @@ static uint32_t fact_2(unsigned n, unsigned d)
 
 /* exported; see header for details */
 size_t rts_init_proc_tables(
-    const unsigned *ts, size_t ts_n, uint32_t *ratios, size_t *inds)
+    const uint32_t *ts, size_t ts_n, uint32_t *ratios, size_t *inds)
 {
     size_t i;
-    unsigned sum = 0;
+    uint32_t sum = 0;
 
     assert(ts_n > 1);
     memset(inds, 0, (ts_n - 1) * sizeof(inds[0]));
