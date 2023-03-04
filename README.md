@@ -1,4 +1,4 @@
-# Real Time Scheduler
+# Shared Time Scheduler
 
 ## Theory
 
@@ -39,6 +39,6 @@ to ![2^{-n}](math/2-n.png) element of ratio *r_m*.
 ## Build
 
 ```
-cmake -B BUILD .
-cmake --build BUILD
+cmake -B build .
+cmake --build build
 ```

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "rt_scheduler.h"
+#include "st_scheduler.h"
 
 #define ARR_SZ(__a) (sizeof(__a)/sizeof(__a[0]))
 
@@ -10,10 +10,10 @@ int main()
     size_t inds[ARR_SZ(ts) - 1];
     uint32_t ratios[ARR_SZ(ts) - 1];
 
-    size_t ratios_n = rts_init_proc_tables(ts, ARR_SZ(ts), ratios, inds);
+    size_t ratios_n = sts_init_proc_tables(ts, ARR_SZ(ts), ratios, inds);
 
     for (int i = 0; i < 512; i++)
-        printf("%d\n", (int)rts_get_prio_id(ratios, inds, ratios_n));
+        printf("%d\n", (int)sts_get_prio_id(ratios, inds, ratios_n));
 
     return 0;
 }

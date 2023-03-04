@@ -1,12 +1,12 @@
 #include <assert.h>
 #include <string.h>     /* memset */
-#include "rt_scheduler.h"
+#include "st_scheduler.h"
 
 /* ratio accuracy: exp2(-M); max 32 */
-#ifndef CONFIG_RTS_M
-# define CONFIG_RTS_M   8
-#elif CONFIG_RTS_M < 1 || CONFIG_RTS_M > 32
-# error "Invalid CONFIG_RTS_M"
+#ifndef CONFIG_STS_M
+# define CONFIG_STS_M   8
+#elif CONFIG_STS_M < 1 || CONFIG_STS_M > 32
+# error "Invalid CONFIG_STS_M"
 #endif
 
 /**
@@ -21,7 +21,7 @@ static uint32_t fact_2(uint32_t n, uint32_t d)
 
     assert(n > 0 && n < d);
 
-    for (i = 0; i < CONFIG_RTS_M && n; i++) {
+    for (i = 0; i < CONFIG_STS_M && n; i++) {
         n <<= 1;
         if (n >= d) {
             f2 |= (1 << i);
@@ -32,7 +32,7 @@ static uint32_t fact_2(uint32_t n, uint32_t d)
 }
 
 /* exported; see header for details */
-size_t rts_init_proc_tables(
+size_t sts_init_proc_tables(
     const uint32_t *ts, size_t ts_n, uint32_t *ratios, size_t *inds)
 {
     size_t i;
@@ -71,7 +71,7 @@ static int check_ind(uint32_t ratio, size_t ind)
 {
     int i;
 
-    for (i = 0; i < CONFIG_RTS_M; ratio >>= 1, i++) {
+    for (i = 0; i < CONFIG_STS_M; ratio >>= 1, i++) {
         if (!(ratio & 1))
             continue;
         else if (!((ind - ((1 << i) - 1)) & ((1 << (i + 1)) - 1)))
@@ -81,7 +81,7 @@ static int check_ind(uint32_t ratio, size_t ind)
 }
 
 /* exported; see header for details */
-size_t rts_get_prio_id(const uint32_t *ratios, size_t *inds, size_t ratios_n)
+size_t sts_get_prio_id(const uint32_t *ratios, size_t *inds, size_t ratios_n)
 {
     size_t i, prio_i;
 
